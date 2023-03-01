@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Product List</title>
+
+
+
+
+
+
+    <body>
+        
+        <div id = "category">
+            <h5>Choose category:</h5>
+            <p *ngFor="let product of getUniqueCategories()">
+              <button class = "category_button" (click) = "getCategorisedList(product)">{{product}}</button>
+            </p>
+            <button id = "back_button" (click) = "getDefaultList()"><img src = "https://cdn-icons-png.flaticon.com/512/17/17699.png" width = "30"></button>
+          </div>
+    <h3 class = "product-list">List of products available</h3>
+    <app-category-list (childEvent)="setCategorisedList($event)"
+                       (getBackItems)="getDefaultList()"> </app-category-list>
+    
+    <div class = "product-container" *ngFor="let product of items">
+      <div class = "row">
+        <img class = "product-image" [src] = "product.image" width = "200px">
+      </div>
+      <div class = "row">
+        <h4 class = "product-name">
+          <a [routerLink]="['/products', product.id]">
+            {{product.name}}
+          </a>
+        </h4>
+        <p> Price: <span class = "product-price">{{product.price | currency: '₸'}}</span> Rating:<span class = "rating">{{product.rating}}</span></p>
+        <ul>
+          <li *ngFor="let descr of product.description" class = product-desciption>{{descr.subdescr}}</li>
+        </ul>
+        <p> Likes: <span class = "product-likes">{{product.like}}</span> <button class = "like" (click)="likePressed(product.id)">Like</button></p>
+        <button (click) = "remove(product.id)">Remove</button>
+      </div>
+    
+    </div>
+</body>
+</html>
